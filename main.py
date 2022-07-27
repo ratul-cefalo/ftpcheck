@@ -4,14 +4,16 @@ from ftplib import FTP
 import pandas as pd
 import json
 
-with open(".env/ftp-creds.json", "r") as fp:
+CRED_PATH = ".env/ftp-creds.json"
+
+with open(CRED_PATH, "r") as fp:
     creds = json.load(fp)
 spectron = creds["spectron"]
-ftp = FTP(host=spectron["HOSTNAME"])
-ftp.login(user=spectron["USERNAME"], passwd=spectron["PASSWORD"])
 
 
 def main(inp: str):
+    ftp = FTP(host=spectron["HOSTNAME"])
+    ftp.login(user=spectron["USERNAME"], passwd=spectron["PASSWORD"])
     store = []
     files = ftp.mlsd(".")
     for file in files:
