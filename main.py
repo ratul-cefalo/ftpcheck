@@ -42,7 +42,21 @@ def get_last_modified(ftp, path):
     # ftp.cwd("..")
     return files[-1][1]["modify"]
 
+def get_last_modified_iis(ftp, path):
+    # cd into opendata folder
+    ftp.cwd(path)
+    # get all file info
+    files = ftp.voidcmd("ls -l")
+    return files
 
+def test_iis():
+    with open(CRED_PATH, "r") as fp:
+        creds = json.load(fp)
+    energinet = creds["energinet"]
+    with FTP(host=energinet["HOSTNAME"]) as ftp:
+        ftp.login(user=energinet["USERNAME"], passwd=energinet["PASSWORD"])
+
+        print(get_last_modified_iis(ftp, energinet["PATH"]))    
 
 
 
@@ -57,4 +71,4 @@ def test():
 
 
 if __name__ == "__main__":
-    typer.run(test)
+    typer.run(test_iis)
