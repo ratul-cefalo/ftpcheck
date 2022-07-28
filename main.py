@@ -6,14 +6,26 @@ import json
 
 CRED_PATH = ".env/ftp-creds.json"
 
-with open(CRED_PATH, "r") as fp:
-    creds = json.load(fp)
-spectron = creds["spectron"]
+
+def get_credentials(loader_name):
+    with open(CRED_PATH, "r") as fp:
+        creds = json.load(fp)
+    return creds.get(loader_name)
 
 
-def main(inp: str):
-    ftp = FTP(host=spectron["HOSTNAME"])
-    ftp.login(user=spectron["USERNAME"], passwd=spectron["PASSWORD"])
+def to_datetime(timestring):
+    """
+    202208062359 to datetime
+    """
+    return datetime(
+        year=int(timestring[:4]),
+        month=int(timestring[4:6]),
+        day=int(timestring[6:8]),
+        hour=int(timestring[8:10]),
+        minute=int(timestring[10:12]),
+        second=int(timestring[12:14]),
+    )
+
     store = []
     files = ftp.mlsd(spectron["PATH"])
     for file in files:
