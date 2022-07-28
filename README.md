@@ -11,10 +11,11 @@ Check ftp for preset state.
 ## Development environment
 
 1. clone repo
-2. run `pipenv install`
-3. run `pipenv shell` to activate virtual environment
-4. create a credential file in `.env` folder [see below]
-5. run `python main.py <ftp name>`
+2. install [pipenv](https://pipenv.pypa.io/en/latest/install/#installing-pipenv)
+3. run `pipenv install`
+4. run `pipenv shell` to activate virtual environment
+5. create a credential file in `.env` folder [see below]
+6. run `python main.py <ftp name>`
 
 ### *Credentials file format*
 
