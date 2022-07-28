@@ -15,17 +15,17 @@ def main(inp: str):
     ftp = FTP(host=spectron["HOSTNAME"])
     ftp.login(user=spectron["USERNAME"], passwd=spectron["PASSWORD"])
     store = []
-    files = ftp.mlsd(".")
+    files = ftp.mlsd(spectron["PATH"])
     for file in files:
         name = "__root__" if file[0] == "/" else file[0]
-        ts = file[1]["modify"]
+        timestring = file[1]["modify"]
         timestamp = datetime(
-            int(ts[:4]),
-            int(ts[4:6]),
-            int(ts[6:8]),
-            int(ts[8:10]),
-            int(ts[10:12]),
-            int(ts[12:14]),
+            year = int(timestring[:4]),
+            month = int(timestring[4:6]),
+            day = int(timestring[6:8]),
+            hour = int(timestring[8:10]),
+            minute = int(timestring[10:12]),
+            second = int(timestring[12:14]),
         )
         store.append((name, timestamp))
     ftp.quit()
