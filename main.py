@@ -1,9 +1,14 @@
 from datetime import datetime
 import typer
+from utils import df_to_table
+from rich import print
+from rich.console import Console
+from rich.table import Table
 from ftplib import FTP
 import pandas as pd
 import json
 
+console = Console()
 CRED_PATH = ".env/ftp-creds.json"
 
 
@@ -31,6 +36,9 @@ def main(ftp_name: str):
     store = []
 
     cred_meta = get_credentials(ftp_name)
+    if cred_meta is None:
+        print("ftp name error")
+        exit(1)
     ftp = FTP(host=cred_meta["HOSTNAME"])
     ftp.login(user=cred_meta["USERNAME"], passwd=cred_meta["PASSWORD"])
     files = ftp.mlsd(path=cred_meta["PATH"])
@@ -42,7 +50,9 @@ def main(ftp_name: str):
     ftp.quit()
     df = pd.DataFrame(store, columns=("filename", "time")).set_index("time")
 
-    print(df.sort_index(axis="index", ascending=False))
+    # df to table
+    # console.print(df.sort_index(axis="index", ascending=False))
+
     df.to_csv("op.DataFrame.csv")
 
 
