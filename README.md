@@ -11,7 +11,7 @@ Check ftp for preset state.
 ## Development environment
 
 1. clone repo
-2. install [pipenv](https://pipenv.pypa.io/en/latest/install/#installing-pipenv)
+2. install [pipenv](https://pipenv.pypa.io/en/latest/install/#installing-pipenv) and ideally [pyenv](https://github.com/pyenv/pyenv-installer) (recomended)
 3. run `pipenv install`
 4. run `pipenv shell` to activate virtual environment
 5. create a credential file in `.env` folder [see below]
